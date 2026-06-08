@@ -4,7 +4,7 @@ AMI_ID="ami-0220d79f3f480ecf5"
 ZONE_ID="Z0185038DV6OKNY1Q01D"
 DOMAIN_NAME="lpdaws.online"
 
-for instances $@
+for instances in $@
 do
 echo "Launching Instances: $instances"
   INSTANCE_ID=$(aws ec2 run-instances \
