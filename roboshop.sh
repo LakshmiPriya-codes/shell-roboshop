@@ -11,21 +11,26 @@ echo "Launching Instances: $instances"
     --image-id ami-0220d79f3f480ecf5\
     --instance-type t3.micro \
     --security-groups "roboshop-common" "roboshop-$instance" \
-	--tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value="roboshop-$instance"}]' \
+	--tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value="roboshop-$instance"}]" \
 	--query 'Instances[0].InstanceId' \
     --output text
   )
     echo "Instance ID: $INSTANCE_ID"
 
     if [ $instance == "frontend" ]; then
-     IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID\
-      --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
+         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID \
+         --query 'Reservations[*].Instances[*].PublicIpAddress' 
+         --output text
+      )
      
      R53_RECORD="$DOMAIN_NAME"
 
     else
        IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID\
-      --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text) 
+       --query 'Reservations[*].Instances[*].PrivateIpAddress' 
+       --output text
+       
+      ) 
 
       R53_RECORD="$instance.$DOMAIN_NAME"
 
@@ -47,7 +52,7 @@ echo "Launching Instances: $instances"
                        "TTL":  1,
                          "ResourceRecords": [
                           {
-                             "Value":"'$IP'"
+                             "Value": "'$IP'"
                            }
                         ]
                     } 
