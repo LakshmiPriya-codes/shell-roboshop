@@ -46,12 +46,12 @@ echo "Launching Instances: $instances"
                    "ResourceRecordSet": {
                       "Name": "'$R53_RECORD'",
                       "Type": "A",
-                       "TTL":  1,
-                         "ResourceRecords": [
+                      "TTL":  1,
+                           "ResourceRecords": [
                           {
-                             "Value": "'$IP'"
+                              "Value": "'$IP'"
                            }
-                        ]
+                          ] 
                     } 
                 ]
             
