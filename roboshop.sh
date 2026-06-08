@@ -51,7 +51,7 @@ echo "Launching Instances: $instances"
                           {
                               "Value": "'$IP'"
                            }
-                          ] 
+                        ] 
                     } 
                 ]
             
@@ -60,4 +60,6 @@ echo "Launching Instances: $instances"
         }
     
     '
+
+    
 done
