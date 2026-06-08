@@ -6,11 +6,11 @@ sudo mkdir -p / $LOG_FOLDER
 sudo chown -R ec2-user:ec2-user $LOG_FOLDER
 sudo chmod -R 755 $LOG_FOLDER
 LOGS_FILE="$LOGS_FOLDER/$0.log"
-TIMESTAMP= $(date +%Y-%M-%S %H:%M:%S)
+TIMESTAMP= "$(date +%Y-%M-%S %H:%M:%S)"
 R="/e[31m"
 G="/e[32m"
 Y="/e[33m"
-N=R="/e[0m"
+N="/e[0m"
 
 
 USERID=$(id -u)
