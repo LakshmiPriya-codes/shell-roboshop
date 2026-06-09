@@ -55,7 +55,9 @@ echo "Launching Instances: $instances"
                     } 
                 }     
             ]
-        } '
+        } 
+     '
+
     
     
 
