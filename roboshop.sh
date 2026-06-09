@@ -49,7 +49,7 @@ echo "Launching Instances: $instances"
                       "TTL":  1,
                            "ResourceRecords": [
                           {
-                              "Value": "'$IP'"
+                               "Value": "'$IP'"
                            }
                         ] 
                     } 
