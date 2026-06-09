@@ -36,7 +36,7 @@ echo "Launching Instances: $instances"
     #####Updating Route53 records ######
     aws route53 change-resource-record-sets \
     --hosted-zone-id  $ZONE_ID \
-    --change-batch '
+    --change-batch  '
 
       {
            "Comment": "Update A record to new IP",
@@ -53,13 +53,11 @@ echo "Launching Instances: $instances"
                            }
                         ] 
                     } 
-                ]
-            
-            }     
-
-        }
+                }     
+            ]
+        } '
     
-    '
+    
 
 
   done
