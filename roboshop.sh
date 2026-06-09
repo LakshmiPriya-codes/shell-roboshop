@@ -61,5 +61,5 @@ echo "Launching Instances: $instances"
     
     '
 
-    
+
 done
