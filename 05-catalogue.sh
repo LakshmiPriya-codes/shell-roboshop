@@ -5,6 +5,9 @@ sudo mkdir -p / $LOG_FOLDER
 sudo chown -R ec2-user:ec2-user $LOG_FOLDER
 sudo chmod -R 755 $LOG_FOLDER
 LOGS_FILE="$LOGS_FOLDER/$0.log"
+SCRIPT_DIR=$PWD
+
+
 USERID=$(id -u)
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 R="\e[31m"
@@ -34,8 +37,36 @@ dnf module enable nodejs:20 -y &>> $LOGS_FILE
 dnf install nodejs -y &>> $LOGS_FILE
 validate $? "Installing NODEJS:20"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOGS_FILE
-validate $? "Creating roboshop system user"
+id roboshop &>> $LOGS_FILE
+if [ $? -ne 0 ]; then
+     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>> $LOGS_FILE
+     validate $? "Creating roboshop system user"
+else
+    echo -e "System user roboshop alredy created .. $Y SKIIPING $N"   
+fi      
 
-mkdir /app    &>> $LOGS_FILE
+rm -rf /app
+validate $? "removng existing code"
+
+rm -rf /tmp/catalogue.zip
+validate $? "Removing catalogue zip"
+
+mkdir -p /app    &>> $LOGS_FILE
 validate $? "Creating app directory"
+
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip  &>> $LOGS_FILE
+cd /app 
+unzip /tmp/catalogue.zip  &>> $LOGS_FILE
+validate $? "Downloaded and extracted catalogue code "
+
+npm install   &>> $LOGS_FILE
+validate $? "Installing dependencies"
+
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+validate $? "Created systemctl service"
+
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
+validate $? "Added mongo repo"
+
+dnf install mongodb-mongosh -y
+validate $? "Installed mongodb client"
