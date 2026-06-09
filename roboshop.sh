@@ -57,11 +57,6 @@ echo "Launching Instances: $instances"
             ]
         } 
      '
-
-    
-    
-
-
   done
 
 #  #!/bin/bash
