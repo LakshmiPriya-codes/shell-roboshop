@@ -1,23 +1,24 @@
-AMI_ID="ami-0220d79f3f480ecf5"
-ZONE_ID="Z0185038DV6OKNY1Q01D"
-DOMAIN_NAME="lpdaws.online"
+#!/bin/bash
 
+#export PATH=$PATH:/usr/local/bin
+
+AMI_ID="ami-0220d79f3f480ecf5"
+ZONE_ID="Z07086101C1CVP7AT2UK4" # replace with your zone ID
+DOMAIN_NAME="daws90s.shop" # replace with your domain name
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-
-###Validation###
-
+### Validation ###
 if [ $# -lt 2 ]; then
     echo -e "$R ERROR:: Atleast 2 arguments required $N"
     echo "USAGE: $0 [create/delete] [instance1] [instance2...]"
     exit 1
 fi
 
-Action=$1
-shift # first argumented will be removed
+ACTION=$1
+shift # first argument will be removed
 
 if [ "$ACTION" != "create" ] && [ "$ACTION" != "delete" ]; then
     echo -e "$R ERROR:: First argument must be either create or delete $N"
@@ -31,9 +32,9 @@ get_instance_id(){
 }
 
 for instance in $@
-do 
-       INSTANCE_ID=$(get_instance_id $instance)
-    if [ "$ACTION" == "create" ]; then
+do
+    INSTANCE_ID=$(get_instance_id $instance)
+    if [ $ACTION == "create" ]; then
         if [ $INSTANCE_ID == "None" ]; then
             echo "Launching Instance: roboshop-$instance"
             INSTANCE_ID=$( aws ec2 run-instances \
@@ -44,10 +45,10 @@ do
             --query 'Instances[0].InstanceId' \
             --output text 
             )
+            echo "Launched Instance: $INSTANCE_ID"
 
-            echo "Launch Instance: $INSTANCE_ID"
-           else 
-            echo "roboshop-$instance already running: $INSTANCE_ID "
+        else
+            echo "roboshop-$instance already running: $INSTANCE_ID"
         fi
-    fi         
-done
+    fi
+done        
