@@ -19,7 +19,7 @@ fi
 Action=$1
 shift # first argumented will be removed
 
-if [ $Action ne "create" ] && [ $Action ne "destroy" ]; then
+if [ $Action != "create" ] && [ $Action != "destroy" ]; then
 
        echo " $R ERROR :: First argument must be either create or delete $N "
        echo "USAGE: $0 [create/delete] [instance1] [instance2...]"  
