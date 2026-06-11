@@ -148,8 +148,6 @@ do
             --output text 
             )
             echo "Launched Instance: $INSTANCE_ID"
-            aws ec2 wait instance-running --instance-ids $INSTANCE_ID
-            echo "Instance is running: $INSTANCE_ID"
 
         else
             echo "roboshop-$instance already running: $INSTANCE_ID"
@@ -193,8 +191,6 @@ do
             }
         '
              echo "updated R53 record for: $instance"
-            else
-                echo "roboshop-$instance already running: $INSTANCE_ID"
        
     fi
 done
