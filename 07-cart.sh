@@ -67,4 +67,4 @@ validate $? "Created systemctl service"
 
 systemctl enable cart &>>$LOGS_FILE
 systemctl restart cart &>>$LOGS_FILE
-Validate $? "Restarting cart"
+validate $? "Restarting cart"
